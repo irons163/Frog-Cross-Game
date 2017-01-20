@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class CarUtil extends MovingObjectUtil{
-	public static final int CAR_DISTANCE = 100;
+	public static final int CAR_DISTANCE = 300;
 	
 	private boolean isCarStartFromLeft = true;
 	private int carX;
@@ -58,5 +58,10 @@ public class CarUtil extends MovingObjectUtil{
 	int getTop() {
 		// TODO Auto-generated method stub
 		return rectCar.top;
+	}
+	
+	@Override
+	Rect getRect(){
+		return rectCar;
 	}
 }

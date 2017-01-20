@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 public class WoodUtil extends MovingObjectUtil{
-	public static final int CAR_DISTANCE = 50;
+	public static final int CAR_DISTANCE = 250;
 	
 	private boolean isCarStartFromLeft = true;
 	private int carX;
@@ -15,19 +15,21 @@ public class WoodUtil extends MovingObjectUtil{
 	public WoodUtil(int startX, int startY, int speedX){
 		this.speedX = speedX;
 		this.carX = speedX;
-		rectCar = new Rect(startX, startY, startX+BitmapUtil.carBitmap.getWidth(), startY + BitmapUtil.carBitmap.getHeight());
+		rectCar = new Rect(startX, startY, startX+BitmapUtil.woodBitmap.getWidth(), startY + BitmapUtil.carBitmap.getHeight());
 	}
 	
 	@Override
 	public void onMove() {
 		// TODO Auto-generated method stub
-		
+		carX += speedX;
 	}
 
 	@Override
 	public void onDrawSelf(Canvas canvas) {
 		// TODO Auto-generated method stub
-		
+		rectCar.left = carX;
+		rectCar.right = carX+BitmapUtil.woodBitmap.getWidth();
+		canvas.drawBitmap(BitmapUtil.woodBitmap, null, rectCar, null);
 	}
 
 	@Override
@@ -56,5 +58,15 @@ public class WoodUtil extends MovingObjectUtil{
 	int getTop() {
 		// TODO Auto-generated method stub
 		return rectCar.top;
+	}
+	
+	@Override
+	Rect getRect(){
+		return rectCar;
+	}
+	
+	private void initWoodBreakTimerThread(){
+		TimerThread timerThread = new TimerThread(100);
+		
 	}
 }

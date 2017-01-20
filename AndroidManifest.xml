@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name="com.example.try_frogcross.GameActivity"></activity>
+            android:name="com.example.try_frogcross.GameActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 
 </manifest>
