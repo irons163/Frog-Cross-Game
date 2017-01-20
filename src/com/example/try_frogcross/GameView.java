@@ -1,6 +1,7 @@
 package com.example.try_frogcross;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,7 +12,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback{
+public class GameView extends SurfaceView implements SurfaceHolder.Callback, Subject{
 	
 	private int currentGameLevel = 1;
 	private Handler handler = new Handler();
@@ -118,6 +119,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		doUtilMoveAndCheckCreateAndRemoveUtilOrNot(boatLines);
 		checkFrogSuccessArrival();
 		checkGameWinOrLose();
+		calculateScroe();
 //		doCarMoveAndCheckCreateAndRemoveCarOrNot();
 //		doWoodMove();
 //		doBoatMove();
@@ -257,6 +259,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 		}
 	}
 	
+	private void calculateScroe(){
+		if(isCollision){
+			notifyObserver();
+		}
+	}
+	
 	public void setCurrentGameLevel(int currentGameLevel){
 		this.currentGameLevel = currentGameLevel;
 	}
@@ -287,6 +295,36 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private List<Observer> observers = new ArrayList<Observer>();
+	private int scoreMultiplierForTime = 10;
+	private int scoreMultiplierForLife = 300;
+	private int MAX_LIFE = 3;
+	private int currentLife = MAX_LIFE;
+	
+	@Override
+	public void registerObserver(Observer o) {
+		// TODO Auto-generated method stub
+		observers.add(o);
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		// TODO Auto-generated method stub
+		int i = observers.indexOf(o);
+		if(i >= 0){
+			observers.remove(i);
+		}
+	}
+
+	@Override
+	public void notifyObserver() {
+		// TODO Auto-generated method stub
+		for(int i = 0 ; i < observers.size(); i++){
+			Observer observer = observers.get(i);
+			observer.update(GameActivity.timerThread.getCurrentTime() * scoreMultiplierForTime + currentLife * scoreMultiplierForLife, 0, 0);
+		}
 	}
 
 	

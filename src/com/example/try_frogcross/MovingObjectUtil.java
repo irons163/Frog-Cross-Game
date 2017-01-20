@@ -10,4 +10,8 @@ public abstract class MovingObjectUtil implements IMovingObject, IDrawSelf{
 	abstract boolean isNeedRemoveInstance();
 	abstract int getTop();
 	abstract Rect getRect();
+    
+    void getInt(){
+//        return 0;
+    }
 }

@@ -76,6 +76,14 @@ public class BitmapUtil {
 		return getSingleDigitsBmp(count);
 	}
 	
+	public static Bitmap createHundredDigitsBitmap(int count){
+		return getDigitsBmp((count/100) % 10);
+	}
+	
+	public static Bitmap createThousantDigitsBitmap(int count){
+		return getDigitsBmp((count/1000) % 10);
+	}
+	
 	private static Bitmap getTensCountBmp(int count) {
 		Bitmap gameTimeTensCountBmp = null;
 		switch ((count / 10) % 10) {
@@ -129,6 +137,57 @@ public class BitmapUtil {
 	private static Bitmap getSingleDigitsBmp(int count) {
 		Bitmap bitmap = null;
 		switch (count % 10) {
+		case 0:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_0);
+			break;
+		case 1:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_1);
+			break;
+		case 2:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_2);
+			break;
+		case 3:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_3);
+			break;
+		case 4:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_4);
+			break;
+		case 5:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_5);
+			break;
+		case 6:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_6);
+			break;
+		case 7:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_7);
+			break;
+		case 8:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_8);
+			break;
+		case 9:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_9);
+			break;
+		default:
+			bitmap = BitmapFactory.decodeResource(context.getResources(),
+					R.drawable.second_0);
+			break;
+		}
+		return bitmap;
+	}
+	
+	private static Bitmap getDigitsBmp(int count) {
+		Bitmap bitmap = null;
+		switch (count) {
 		case 0:
 			bitmap = BitmapFactory.decodeResource(context.getResources(),
 					R.drawable.second_0);

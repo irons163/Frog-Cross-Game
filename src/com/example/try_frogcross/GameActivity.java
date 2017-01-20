@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-public class GameActivity extends Activity implements OnClickListener{
+public class GameActivity extends Activity implements OnClickListener, Observer, DisplayElement{
 	GameView gameView;
 	ImageButton upBtn, downBtn, leftBtn, rightBtn;
 	ProgressBar timeProgressBar;
@@ -24,12 +24,20 @@ public class GameActivity extends Activity implements OnClickListener{
 	public int currentGameLevel;
 	public static final int GAME_MAX_TIME = 30;
 	
-	private TimerThread timerThread;
+	public static TimerThread timerThread;
 	
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			timeProgressBar.setProgress(msg.arg1);
-			timeProgressBar.invalidate();
+			
+			if(msg.what == UPDATE_SCORE){
+				ten_digit.setImageBitmap(BitmapUtil.createTensBitmap((int)temp));
+				single_digit.setImageBitmap(BitmapUtil.createSingleDigitsBitmap((int)temp));
+				hundred_digit.setImageBitmap(BitmapUtil.createHundredDigitsBitmap((int)temp));
+				thousand_digit.setImageBitmap(BitmapUtil.createThousantDigitsBitmap((int)temp));
+			}else{
+				timeProgressBar.setProgress(msg.arg1);
+				timeProgressBar.invalidate();
+			}
 		};
 	};
 	
@@ -64,7 +72,11 @@ public class GameActivity extends Activity implements OnClickListener{
 		gameView.setCurrentGameLevel(currentGameLevel);
 		gameView.setHander(handler);
 		
+		gameView.registerObserver(this);
+		
 		initTimer();
+		
+		
 	}
 	
 	
@@ -94,7 +106,25 @@ public class GameActivity extends Activity implements OnClickListener{
 	private void initTimer(){
 		timerThread = new TimerThread(30);
 		timerThread.setHandler(handler);
+//		gameView.setf
 		timerThread.start();
+	}
+
+	float temp, humidity, pressure;
+	
+	@Override
+	public void update(float temp, float humidity, float pressure) {
+		// TODO Auto-generated method stub
+		this.temp = temp;
+		display();
+	}
+
+	private static final int UPDATE_SCORE = 1;
+	
+	@Override
+	public void display() {
+		// TODO Auto-generated method stub
+		handler.sendEmptyMessage(UPDATE_SCORE);
 	}
 	
 }
